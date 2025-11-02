@@ -1,4 +1,0 @@
-export const PASSWORD_MANAGER = {
-  MIN_LENGTH: 12,
-  MAX_LENGTH: 32,
-};

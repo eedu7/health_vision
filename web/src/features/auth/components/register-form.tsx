@@ -12,22 +12,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm, revalidateLogic } from "@tanstack/react-form";
 import z from "zod";
-import { PASSWORD_MANAGER } from "../constants";
 import { useRegister } from "../hooks/use-auth";
+import { GoogleIcon, GitHubIcon } from "./ui/icons";
+import { SocialButton } from "./social-button";
+import { ArrowRightIcon, Loader2Icon } from "lucide-react";
 
 const formSchema = z
   .object({
     email: z.email(),
     password: z
       .string()
-      .min(
-        PASSWORD_MANAGER.MIN_LENGTH,
-        `Password must be at least ${PASSWORD_MANAGER.MIN_LENGTH} characters`,
-      )
-      .max(
-        PASSWORD_MANAGER.MAX_LENGTH,
-        `Password must not exceed ${PASSWORD_MANAGER.MAX_LENGTH} characters`,
-      )
+      .min(12, `Password must be at least 12 characters`)
+      .max(32, `Password must not exceed 32 characters`)
       .refine((val) => /[A-Z]/.test(val), {
         message: "Password must contain at least one uppercase letter",
       })
@@ -62,7 +58,6 @@ export const RegisterForm = () => {
     },
     onSubmit: async ({ formApi }) => {
       if (formApi.state.isValid) {
-        alert("Valid");
         register.mutateAsync();
       }
     },
@@ -77,6 +72,7 @@ export const RegisterForm = () => {
         className="w-full max-w-md"
       >
         <FieldGroup>
+          {/* Email Field */}
           <FieldSet>
             <form.Field
               name="email"
@@ -109,6 +105,8 @@ export const RegisterForm = () => {
                 </Field>
               )}
             />
+
+            {/* Password Field */}
             <form.Field
               name="password"
               children={(field) => (
@@ -116,9 +114,9 @@ export const RegisterForm = () => {
                   <FieldLabel htmlFor={field.name}>Password</FieldLabel>
                   <Input
                     type="password"
-                    placeholder="******"
-                    minLength={PASSWORD_MANAGER.MIN_LENGTH}
-                    maxLength={PASSWORD_MANAGER.MAX_LENGTH}
+                    placeholder="************"
+                    minLength={12}
+                    maxLength={32}
                     required
                     name={field.name}
                     value={field.state.value}
@@ -142,6 +140,8 @@ export const RegisterForm = () => {
                 </Field>
               )}
             />
+
+            {/* ConfirmPassword Field */}
             <form.Field
               name="confirmPassword"
               children={(field) => (
@@ -173,6 +173,8 @@ export const RegisterForm = () => {
                 </Field>
               )}
             />
+
+            {/* Submit Button */}
             <form.Subscribe
               children={() => (
                 <Field className="w-full">
@@ -181,14 +183,25 @@ export const RegisterForm = () => {
                     disabled={register.isPending || form.state.isDefaultValue}
                     className="w-full cursor-pointer"
                   >
-                    Submit
+                    {register.isPending ? (
+                      <>
+                        <span className="mr-2">Registering...</span>
+                        <Loader2Icon className="animate-spin" />
+                      </>
+                    ) : (
+                      <>
+                        <span className="mr-2">Register</span>
+                        <ArrowRightIcon name="arrow-right" />
+                      </>
+                    )}
                   </Button>
                 </Field>
               )}
             />
           </FieldSet>
-          <FieldSeparator />
-          <FieldSet></FieldSet>
+          <FieldSeparator children={<p className="text-gray-500">or</p>} />
+          {/* TODO: Add Social Button */}
+          <SocialButton />
         </FieldGroup>
       </form>
     </div>

@@ -9,10 +9,10 @@ export const metadata: Metadata = {
 export default function RegisterPage() {
   return (
     <AuthLayout
-      imgSrc="/images/login_art.png"
-      imgAlt="Login Art"
-      title="Welcome back"
-      description="Today a new day. Sign up to start"
+      imgSrc="/images/register_art.jpg"
+      imgAlt="Register Art"
+      title="Create your account"
+      description="Start your journey with Health Vision today."
       forwardText="Already have an account? "
       forwardTitle="Sign in"
       forwardHref="/login"

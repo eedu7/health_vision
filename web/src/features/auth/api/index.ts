@@ -1,3 +1,4 @@
+// TODO: Implement login API
 export const loginApi = async () => {
   return {
     success: true,
@@ -11,6 +12,8 @@ export const loginApi = async () => {
     },
   };
 };
+
+// TODO: Implement register API
 export const registerApi = async () => {
   return {
     success: true,
@@ -24,6 +27,8 @@ export const registerApi = async () => {
     },
   };
 };
+
+// TODO: Implement logout API
 export const logoutApi = async () => {
   return {
     success: true,

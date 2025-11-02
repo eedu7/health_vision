@@ -12,9 +12,9 @@ export default function LoginPage() {
       imgSrc="/images/login_art.png"
       imgAlt="Login Art"
       title="Welcome back"
-      description="Today a new day. Sign in to start"
+      description="Sign in to continue your Health Vision experience."
       forwardText="Don't have an account? "
-      forwardTitle="Sign up"
+      forwardTitle="Create one"
       forwardHref="/register"
     >
       <LoginForm />
