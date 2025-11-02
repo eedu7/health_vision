@@ -21,6 +21,9 @@
       "recommended": true,
       "suspicious": {
         "noUnknownAtRules": "off"
+      },
+      "correctness": {
+        "noChildrenProp": null
       }
     },
     "domains": {
@@ -32,6 +35,7 @@
     "actions": {
       "source": {
         "organizeImports": "on",
+        "useSortedAttributes": "on",
         "recommended": true
       }
     }
