@@ -21,3 +21,5 @@ class Config(BaseSettings):
 
 
 config: Config = Config()
+
+print(config.ENVIRONMENT)
