@@ -1,4 +1,0 @@
-
-
-class Passwword:
-    pass
