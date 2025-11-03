@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:18.0-alpine3.22
+    env_file:
+      - .env
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - health_vision_data:/var/lib/postgresql/data
+
+  pgadmin4:
+    image: elestio/pgadmin:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_LISTEN_PORT: 8080
+    ports:
+      - "${PGADMIN_DEFAULT_PORT}:8080"
+    volumes:
+      - servers.json:/pgadmin4/servers.json
+    depends_on:
+      - postgres
+
+volumes:
+  health_vision_data:
+  servers.json:
