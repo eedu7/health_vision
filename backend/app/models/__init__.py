@@ -1,6 +1,6 @@
 from .user import Base, User
 
 __all__ = [
-    User,
-    Base,
+    "User",
+    "Base",
 ]

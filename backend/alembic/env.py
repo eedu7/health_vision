@@ -1,15 +1,18 @@
 import asyncio
-from logging.config import fileConfig
-from pathlib import Path
-
-from alembic import context
-from sqlalchemy import pool
-from sqlalchemy.ext.asyncio import create_async_engine
 
 # -------------------------------------------------------------------
 # Ensure project root is importable
 # -------------------------------------------------------------------
 import sys
+from logging.config import fileConfig
+from pathlib import Path
+
+from sqlalchemy import pool
+from sqlalchemy.ext.asyncio import create_async_engine
+
+from alembic import context
+from app.core.config import config as app_config
+from app.models import Base
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 sys.path.append(str(BASE_DIR))
@@ -23,10 +26,8 @@ fileConfig(config.config_file_name)
 # -------------------------------------------------------------------
 # Import app metadata
 # -------------------------------------------------------------------
-from app.core.config import config as app_config
-from app.models import Base
-
 target_metadata = Base.metadata
+
 
 # -------------------------------------------------------------------
 # Offline migrations
@@ -43,6 +44,7 @@ def run_migrations_offline():
 
     with context.begin_transaction():
         context.run_migrations()
+
 
 # -------------------------------------------------------------------
 # Online (async) migrations
@@ -70,6 +72,7 @@ async def run_migrations_online():
         await connection.run_sync(do_run_migrations)
 
     await connectable.dispose()
+
 
 # -------------------------------------------------------------------
 # Entry point

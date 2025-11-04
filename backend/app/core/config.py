@@ -19,6 +19,9 @@ class EnvironmentType(StrEnum):
 
 
 class Config(BaseSettings):
+    # App Configuration
+    PORT: int = 8000
+    HOST: str = "localhost"
     ENVIRONMENT: EnvironmentType = EnvironmentType.DEVELOPMENT
 
     # Database Configuration
