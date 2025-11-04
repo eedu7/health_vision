@@ -10,7 +10,6 @@ services:
 
   pgadmin4:
     image: elestio/pgadmin:latest
-    restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
