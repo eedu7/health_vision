@@ -31,6 +31,13 @@ class Config(BaseSettings):
     POSTGRES_HOST: str = "localhost"
     POSTGRES_PORT: int = 5432
 
+    # JWT Configuration
+    JWT_PRIVATE_KEY_PATH: str = "keys/private.example.pem"
+    JWT_PUBLIC_KEY_PATH: str = "keys/public.example.pem"
+    JWT_ALGORITHM: str = "RS256"
+    JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    JWT_REFRESH_TOKEN_EXPIRE_DAYS: int = 7
+
     @computed_field
     @property
     def DATABASE_URL(self) -> str:

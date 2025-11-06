@@ -114,3 +114,8 @@ target/
 # OS-specific
 .DS_Store
 Thumbs.db
+
+# Keys
+*.pem
+*.key
+!*.example.pem
