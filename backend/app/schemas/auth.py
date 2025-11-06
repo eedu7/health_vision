@@ -2,6 +2,9 @@ import re
 
 from pydantic import BaseModel, EmailStr, Field, field_validator
 
+from .token import Token
+from .user import UserOut
+
 
 class UserBase(BaseModel):
     email: EmailStr = Field(
@@ -34,3 +37,8 @@ class UserCreate(UserBase):
 
 class UserLogin(UserBase):
     pass
+
+
+class AuthResponse(BaseModel):
+    user: UserOut
+    token: Token

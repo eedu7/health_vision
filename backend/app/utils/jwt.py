@@ -1,6 +1,7 @@
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
-from typing import Any, Dict, Literal
+from typing import Any, Dict, List, Literal
+from uuid import uuid4
 
 from jose import ExpiredSignatureError, JWTError, jwt
 
@@ -29,7 +30,7 @@ class JWTHandler:
         with open(path, "r") as key_file:
             return key_file.read()
 
-    def encode(self, payload: dict, token_type: TokenType) -> str:
+    def encode(self, payload: Dict[str, Any], token_type: TokenType) -> str:
         payload = payload.copy()
         if token_type == "access":
             expires_in = datetime.now(UTC) + timedelta(minutes=self.access_token_expire_minutes)
@@ -47,7 +48,7 @@ class JWTHandler:
                 token,
                 self.public_key,
                 algorithms=[self.algorithm],
-                options={"verify_exp": True},
+                options={"verify_exp": verify_exp},
             )
             if expected_type and payload.get("type") != expected_type:
                 raise ValueError(f"Expected {expected_type} token, got {payload.get('type')}")
@@ -59,7 +60,27 @@ class JWTHandler:
         except Exception as e:
             raise ValueError(f"An error occurred while decoding the token: {e}")
 
-    def create_token_pair(self, payload: dict) -> Token:
-        access_token = self.encode(payload, token_type="access")
-        refresh_token = self.encode(payload, token_type="refresh")
+    def create_token_pair(
+        self,
+        user_id: str,
+        issuer: str,
+        roles: List[str] | None = None,
+    ) -> Token:
+        # Unique token IDs
+        access_jti = str(uuid4())
+        refresh_jti = str(uuid4())
+
+        # Access Token Payload
+        access_payload = {
+            "sub": user_id,
+            "iss": issuer,
+            "roles": roles or [],
+            "jti": access_jti,
+        }
+
+        # Refresh Token Payload
+        refresh_payload = {"sub": user_id, "iss": issuer, "jti": refresh_jti}
+
+        access_token = self.encode(access_payload, token_type="access")
+        refresh_token = self.encode(refresh_payload, token_type="refresh")
         return Token(access_token=access_token, refresh_token=refresh_token)
