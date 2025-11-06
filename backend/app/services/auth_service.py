@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import User
 from app.repositories import UserRepository
@@ -6,9 +7,8 @@ from app.utils import Password
 
 
 class AuthService:
-    # TODO: Pass session instead of repository
-    def __init__(self, repository: UserRepository):
-        self.repository = repository
+    def __init__(self, session: AsyncSession):
+        self.repository = UserRepository(session)
 
     async def register(self, email: str, password: str):
         exists = await self.repository.get_by_email(email)
