@@ -2,10 +2,12 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
-from app.core.dependencies import get_auth_service
+from app.core.dependencies import AuthenticationRequired, get_auth_service
 from app.services import AuthService
 
-router = APIRouter()
+router = APIRouter(
+    dependencies=[Depends(AuthenticationRequired)],
+)
 
 
 @router.get("/me")
