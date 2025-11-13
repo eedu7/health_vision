@@ -1,0 +1,34 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  format:
+    desc: "Format code with Ruff"
+    cmds:
+      - uvx ruff format .
+  
+  lint:
+    desc: "Lint and fix code with Ruff"
+    cmds:
+      - uvx ruff check --fix
+
+  check:
+    desc: "Run type checking with ty"
+    cmds:
+      - uvx ruff format .
+
+  all:
+    desc: "Run format, lint, and type check"
+    cmds:
+      - task: format
+      - task: lint
+      - task: check
+
+  dev:
+    desc: "Run FastAPI development server"
+    cmds:
+      - .venv/Scripts/python -m fastapi dev app/core/server.py
