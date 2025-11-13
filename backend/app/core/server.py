@@ -1,14 +1,8 @@
-from typing import List
-
 from fastapi import FastAPI
-from fastapi.middleware import Middleware
 
 from app.api import router
-from app.core.middlewares import CORS_MIDDLEWARE, AuthenticationMiddleware
 
-
-def make_middleware() -> List[Middleware]:
-    return [Middleware(AuthenticationMiddleware), CORS_MIDDLEWARE]
+from .middlewares import make_middleware
 
 
 def create_app():

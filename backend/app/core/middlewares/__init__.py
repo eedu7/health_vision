@@ -1,4 +1,3 @@
-from .authentication import AuthenticationMiddleware
-from .cors import CORS_MIDDLEWARE
+from .middleware import make_middleware
 
-__all__ = ["AuthenticationMiddleware", "CORS_MIDDLEWARE"]
+__all__ = ["make_middleware"]

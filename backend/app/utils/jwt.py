@@ -42,7 +42,7 @@ class JWTHandler:
         )
         return jwt.encode(payload, self.private_key, algorithm=self.algorithm)
 
-    def decode(self, token: str, expected_type: TokenType = None, verify_exp: bool = True) -> Dict[str, Any]:
+    def decode(self, token: str, expected_type: TokenType, verify_exp: bool = True) -> Dict[str, Any]:
         try:
             payload = jwt.decode(
                 token,
